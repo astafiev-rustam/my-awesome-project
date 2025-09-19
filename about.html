@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Системы линейных алгебраических уравнений</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 25px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2c3e50;
+            font-size: 2.5rem;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .header-description {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.2rem;
+            color: #7f8c8d;
+        }
+        
+        .module-title {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #3498db;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #3498db;
+            font-size: 1.8rem;
+        }
+        
+        .theory-block {
+            background-color: #f8f9fa;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border-left: 5px solid #2c3e50;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+        
+        .theory-content {
+            margin-bottom: 20px;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+        
+        .theory-content p {
+            margin-bottom: 20px;
+        }
+        
+        .theory-content img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .theory-content code {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            display: block;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            line-height: 1.5;
+        }
+        
+        .inline-code {
+            background-color: #eee;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .matrix {
+            display: inline-block;
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #2d2d2d;
+            color: white;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .matrix-row {
+            display: flex;
+            justify-content: center;
+        }
+        
+        .matrix-element {
+            padding: 5px 10px;
+            text-align: center;
+        }
+        
+        .question-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            border-left: 4px solid #3498db;
+        }
+        
+        .question-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        
+        .options {
+            margin: 20px 0;
+        }
+        
+        .option {
+            margin-bottom: 12px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid #e9ecef;
+        }
+        
+        .option:hover {
+            background-color: #e9ecef;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .option input {
+            margin-right: 12px;
+        }
+        
+        .option label {
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            font-size: 1.1rem;
+        }
+        
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            margin-top: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+        }
+        
+        .next-module-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            margin-top: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .next-module-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            animation: modalAppear 0.4s ease;
+        }
+        
+        @keyframes modalAppear {
+            from {
+                opacity: 0;
+                transform: translateY(-30px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        .modal-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+        
+        .modal-text {
+            margin-bottom: 25px;
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+        
+        .modal-image {
+            max-width: 100%;
+            border-radius: 10px;
+            margin: 20px 0;
+            max-height: 300px;
+            object-fit: contain;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .correct {
+            color: #27ae60;
+        }
+        
+        .incorrect {
+            color: #e74c3c;
+        }
+        
+        .modal-btn {
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .modal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+        }
+        
+        .progress-bar {
+            height: 12px;
+            background-color: #ecf0f1;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            overflow: hidden;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            width: 0%;
+            transition: width 0.7s ease;
+        }
+        
+        .module-progress {
+            text-align: center;
+            margin-bottom: 25px;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 1.2rem;
+        }
+        
+        .results {
+            text-align: center;
+            margin-top: 30px;
+            padding: 30px;
+            background-color: #f8f9fa;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .results h2 {
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        
+        .restart-btn {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            margin-top: 25px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .restart-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+        }
+        
+        .nav-btn {
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+        }
+        
+        .nav-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .fill-blank {
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .fill-input {
+            padding: 10px 15px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            margin: 0 8px;
+            width: 120px;
+            font-size: 1.1rem;
+            text-align: center;
+            transition: border-color 0.3s;
+        }
+        
+        .fill-input:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        
+        .math-example {
+            background-color: #e8f4fc;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #3498db;
+        }
+        
+        .math-example h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .definition {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #e74c3c;
+        }
+        
+        .definition h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .important {
+            background-color: #fff3e0;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #ff9800;
+        }
+        
+        .important h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .module-title {
+                font-size: 1.5rem;
+            }
+            
+            .theory-content {
+                font-size: 1rem;
+            }
+            
+            .fill-input {
+                width: 80px;
+                margin: 5px;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .nav-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Системы линейных алгебраических уравнений</h1>
+        <p class="header-description">Интерактивный курс по методам решения СЛАУ для студентов высших учебных заведений</p>
+        
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+        
+        <div class="module-progress" id="module-progress">Модуль 1 из 4</div>
+        
+        <div id="content-container">
+            <!-- Теория и вопросы будут добавляться динамически -->
+        </div>
+        
+        <div class="navigation">
+            <button class="nav-btn" id="prev-btn" onclick="prevContent()">Назад</button>
+            <button class="nav-btn" id="next-btn" onclick="nextContent()">Далее</button>
+        </div>
+        
+        <div class="results" id="results" style="display: none;">
+            <h2>Поздравляем с завершением курса!</h2>
+            <p>Вы успешно изучили методы решения систем линейных алгебраических уравнений.</p>
+            <p>Правильных ответов: <span id="correct-answers">0</span> из <span id="total-questions">0</span></p>
+            <button class="restart-btn" onclick="restartCourse()">Начать заново</button>
+        </div>
+    </div>
+
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <h2 class="modal-title" id="modal-title">Результат</h2>
+            <p class="modal-text" id="modal-text">Ваш ответ:</p>
+            <img class="modal-image" id="modal-image" src="" alt="">
+            <button class="modal-btn" onclick="closeModal()">Продолжить</button>
+        </div>
+    </div>
+
+    <script>
+        // База данных модулей по СЛАУ
+        const courseModules = [
+            {
+                title: "Модуль 1: Основные понятия и определения",
+                content: [
+                    {
+                        type: "theory",
+                        content: `
+                            <h2>Что такое система линейных алгебраических уравнений?</h2>
+                            <p>Система линейных алгебраических уравнений (СЛАУ) — это система уравнений вида:</p>
+                            
+                            <div class="matrix">
+                                <div class="matrix-row">
+                                    <div class="matrix-element">a<sub>11</sub>x<sub>1</sub> + a<sub>12</sub>x<sub>2</sub> + ... + a<sub>1n</sub>x<sub>n</sub> = b<sub>1</sub></div>
+                                </div>
+                                <div class="matrix-row">
+                                    <div class="matrix-element">a<sub>21</sub>x<sub>1</sub> + a<sub>22</sub>x<sub>2</sub> + ... + a<sub>2n</sub>x<sub>n</sub> = b<sub>2</sub></div>
+                                </div>
+                                <div class="matrix-row">
+                                    <div class="matrix-element">...</div>
+                                </div>
+                                <div class="matrix-row">
+                                    <div class="matrix-element">a<sub>m1</sub>x<sub>1</sub> + a<sub>m2</sub>x<sub>2</sub> + ... + a<sub>mn</sub>x<sub>n</sub> = b<sub>m</sub></div>
+                                </div>
+                            </div>
+                            
+                            <p>где:</p>
+                            <ul>
+                                <li>x<sub>1</sub>, x<sub>2</sub>, ..., x<sub>n</sub> — неизвестные переменные</li>
+                                <li>a<sub>ij</sub> — коэффициенты системы (i = 1,2,...,m; j = 1,2,...,n)</li>
+                                <li>b<sub>1</sub>, b<sub>2</sub>, ..., b<sub>m</sub> — свободные члены</li>
+                            </ul>
+                            
+                            <div class="definition">
+                                <h3>Определение</h3>
+                                <p>Решением СЛАУ называется такой набор чисел (α<sub>1</sub>, α<sub>2</sub>, ..., α<sub>n</sub>), который при подстановке в систему вместо соответствующих неизвестных обращает каждое уравнение в тождество.</p>
+                            </div>
+                            
+                            <div class="important">
+                                <h3>Важно!</h3>
+                                <p>Система линейных уравнений может иметь:</p>
+                                <ul>
+                                    <li>Единственное решение</li>
+                                    <li>Бесконечно много решений</li>
+                                    <li>Не иметь решений (быть несовместной)</li>
+                                </ul>
+                            </div>
+                        `
+                    },
+                    {
+                        type: "question",
+                        question: "Какая из следующих систем является системой линейных алгебраических уравнений?",
+                        options: [
+                            "x² + y = 5, 2x - y = 3",
+                            "2x + 3y - z = 7, x - y + 2z = 4, 3x + 2y - z = 5",
+                            "sin(x) + y = 1, x + cos(y) = 0",
+                            "xy + z = 2, x + yz = 3, x + y + z = 1"
+                        ],
+                        correctAnswer: 1
+                    },
+                    {
+                        type: "theory",
+                        content: `
+                            <h2>Матричная форма записи СЛАУ</h2>
+                            <p>Любую систему линейных уравнений можно записать в матричной форме:</p>
+                            
+                            <div class="matrix">
+                                <div class="matrix-row">
+                                    <div class="matrix-element">AX = B</div>
+                                </div>
+                            </div>
+                            
+                            <p>где:</p>
+                            <ul>
+                                <li>A = <div class="matrix" style="display: inline-block;">
+                                    <div class="matrix-row">
+                                        <div class="matrix-element">a<sub>11</sub></div>
+                                        <div class="matrix-element">a<sub>12</sub></div>
+                                        <div class="matrix-element">...</div>
+                                        <div class="matrix-element">a<sub>1n</sub></div>
+                                    </div>
+                                    <div class="matrix-row">
+                                        <div class="matrix-element">a<sub>21</sub></div>
+                                        <div class="matrix-element">a<sub>22</sub></div>
+                                        <div class="matrix-element">...</div>
+                                        <div class="matrix-element">a<sub>2n</sub></div>
+                                    </div>
+                                    <div class="matrix-row">
+                                        <div class="matrix-element">...</div>
+                                        <div class="matrix-element">...</div>
+                                        <div class="matrix-element">...</div>
+                                        <div class="matrix-element">...</div>
+                                    </div>
+                                    <div class="matrix-row">
+                                        <div class="matrix-element">a<sub>m1</sub></div>
+                                        <div class="matrix-element">a<sub>m2</sub></div>
+                                        <div class="matrix-element">...</div>
+                                        <div class="matrix-element">a<sub>mn</sub></div>
+                                    </div>
+                                </div> — матрица коэффициентов системы</li>
+                                
+                                <li>X = <div class="matrix" style="display: inline-block;">
+                                    <div class="matrix-row">
+                                        <div class="matrix-element">x<sub>1</sub></div>
+                                    </div>
+                                    <div class="matrix-row">
+                                        <div class="matrix-element">x<sub>2</sub></div>
+                                    </div>
+                                    <div class="matrix-row">
+                                        <div class="matrix-element">...</div>
+                                    </div>
+                                    <div class="matrix-row">
+                                        <div class="matrix-element">x<sub>n</sub></div>
+                                    </div>
+                                </div> — столбец неизвестных</li>
+                                
+                                <li>B = <div class="matrix" style="display: inline-block;">
+                                    <div class="matrix-row">
+                                        <div class="matrix-element">b<sub>1</sub></div>
+                                    </div>
+                                    <div class="matrix-row">
+                                        <div class="matrix-element">b<sub>2</sub></div>
+                                    </div>
+                                    <div class="matrix-row">
+                                        <div class="matrix-element">...</div>
+                                    </div>
+                                    <div class="matrix-row">
+                                        <div class="matrix-element">b<sub>m</sub></div>
+                                    </div>
+                                </div> — столбец свободных членов</li>
+                            </ul>
+                            
+                            <div class="math-example">
+                                <h3>Пример</h3>
+                                <p>Система уравнений:</p>
+                                <p>2x + 3y - z = 7</p>
+                                <p>x - y + 2z = 4</p>
+                                <p>3x + 2y - z = 5</p>
+                                
+                                <p>В матричной форме:</p>
+                                <div class="matrix">
+                                    <div class="matrix-row">
+                                        <div class="matrix-element">2</div>
+                                        <div class="matrix-element">3</div>
+                                        <div class="matrix-element">-1</div>
+                                    </div>
+                                    <div class="matrix-row">
+                                        <div class="matrix-element">1</div>
+                                        <div class="matrix-element">-1</div>
+                                        <div class="matrix-element">2</div>
+                                    </div>
+                                    <div class="matrix-row">
+                                        <div class="matrix-element">3</div>
+                                        <div class="matrix-element">2</div>
+                                        <div class="matrix-element">-1</div>
+                                    </div>
+                                </div>
+                                ×
+                                <div class="matrix">
+                                    <div class="matrix-row">
+                                        <div class="matrix-element">x</div>
+                                    </div>
+                                    <div class="matrix-row">
+                                        <div class="matrix-element">y</div>
+                                    </div>
+                                    <div class="matrix-row">
+                                        <div class="matrix-element">z</div>
+                                    </div>
+                                </div>
+                                =
+                                <div class="matrix">
+                                    <div class="matrix-row">
+                                        <div class="matrix-element">7</div>
+                                    </div>
+                                    <div class="matrix-row">
+                                        <div class="matrix-element">4</div>
+                                    </div>
+                                    <div class="matrix-row">
+                                        <div class="matrix-element">5</div>
+                                    </div>
+                                </div>
+                            </div>
+                        `
+                    },
+                    {
+                        type: "fill-blank",
+                        question: "Запишите систему уравнений в матричной форме:",
+                        code: `3x + 2y = 8<br>x - 4y = -2`,
+                        blanks: [
+                            { answer: "3", placeholder: "a11" },
+                            { answer: "2", placeholder: "a12" },
+                            { answer: "1", placeholder: "a21" },
+                            { answer: "-4", placeholder: "a22" },
+                            { answer: "8", placeholder: "b1" },
+                            { answer: "-2", placeholder: "b2" }
+                        ]
+                    }
+                ]
+            },
+            {
+                title: "Модуль 2: Метод Гаусса",
+                content: [
+                    {
+                        type: "theory",
+                        content: `
+                            <h2>Метод Гаусса решения СЛАУ</h2>
+                            <p>Метод Гаусса — это классический метод решения систем линейных алгебраических уравнений. Он состоит из двух этапов:</p>
+                            <ol>
+                                <li><strong>Прямой ход</strong> — приведение системы к ступенчатому виду с помощью элементарных преобразований</li>
+                                <li><strong>Обратный ход</strong> — последовательное нахождение значений неизвестных</li>
+                            </ol>
+                            
+                            <div class="important">
+                                <h3>Элементарные преобразования системы</h3>
+                                <ul>
+                                    <li>Перестановка уравнений местами</li>
+                                    <li>Умножение уравнения на ненулевое число</li>
+                                    <li>Прибавление к одному уравнению другого, умноженного на число</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="math-example">
+                                <h3>Пример решения методом Гаусса</h3>
+                                <p>Рассмотрим систему:</p>
+                                <p>2x + y - z = 8</p>
+                                <p>-3x - y + 2z = -11</p>
+                                <p>-2x + y + 2z = -3</p>
+                                
+                                <p><strong>Шаг 1:</strong> Запишем расширенную матрицу системы:</p>
+                                <div class="matrix">
+                                    <div class="matrix-row">
+                                        <div class="matrix-element">2</div>
+                                        <div class="matrix-element">1</div>
+                                        <div class="matrix-element">-1</div>
+                                        <div class="matrix-element">|</div>
+                                        <div class="matrix-element">8</div>
+                                    </div>
+                                    <div class="matrix-row">
+                                        <div class="matrix-element">-3</div>
+                                        <div class="matrix-element">-1</div>
+                                        <div class="matrix-element">2</div>
+                                        <div class="matrix-element">|</div>
+                                        <div class="matrix-element">-11</div>
+                                    </div>
+                                    <div class="matrix-row">
+                                        <div class="matrix-element">-2</div>
+                                        <div class="matrix-element">1</div>
+                                        <div class="matrix-element">2</div>
+                                        <div class="matrix-element">|</div>
+                                        <div class="matrix-element">-3</div>
+                                    </div>
+                                </div>
+                                
+                                <p><strong>Шаг 2:</strong> Прямой ход — приведение к ступенчатому виду...</p>
+                            </div>
+                        `
+                    },
+                    {
+                        type: "question",
+                        question: "Какие преобразования разрешены в методе Гаусса?",
+                        options: [
+                            "Умножение уравнения на ноль",
+                            "Перестановка уравнений местами",
+                            "Возведение уравнения в квадрат",
+                            "Замена переменных логарифмированием"
+                        ],
+                        correctAnswer: 1
+                    },
+                    {
+                        type: "theory",
+                        content: `
+                            <h2>Продолжение решения методом Гаусса</h2>
+                            
+                            <div class="math-example">
+                                <h3>Пример (продолжение)</h3>
+                                <p><strong>Шаг 2:</strong> Прямой ход — приведение к ступенчатому виду:</p>
+                                <p>1. Поменяем первую и вторую строки местами:</p>
+                                <div class="matrix">
+                                    <div class="matrix-row">
+                                        <div class="matrix-element">-3</div>
+                                        <div class="matrix-element">-1</div>
+                                        <div class="matrix-element">2</div>
+                                        <div class="matrix-element">|</div>
+                                        <div class="matrix-element">-11</div>
+                                    </div>
+                                    <div class="matrix-row">
+                                        <div class="matrix-element">2</div>
+                                        <div class="matrix-element">1</div>
+                                        <div class="matrix-element">-1</div>
+                                        <div class="matrix-element">|</div>
+                                        <div class="matrix-element">8</div>
+                                    </div>
+                                    <div class="matrix-row">
+                                        <div class="matrix-element">-2</div>
+                                        <div class="matrix-element">1</div>
+                                        <div class="matrix-element">2</div>
+                                        <div class="matrix-element">|</div>
+                                        <div class="matrix-element">-3</div>
+                                    </div>
+                                </div>
+                                
+                                <p>2. Приведем матрицу к ступенчатому виду...</p>
+                                
+                                <p><strong>Шаг 3:</strong> После всех преобразований получаем:</p>
+                                <div class="matrix">
+                                    <div class="matrix-row">
+                                        <div class="matrix-element">1</div>
+                                        <div class="matrix-element">1/3</div>
+                                        <div class="matrix-element">-2/3</div>
+                                        <div class="matrix-element">|</div>
+                                        <div class="matrix-element">11/3</div>
+                                    </div>
+                                    <div class="matrix-row">
+                                        <div class="matrix-element">0</div>
+                                        <div class="matrix-element">1</div>
+                                        <div class="matrix-element">2</div>
+                                        <div class="matrix-element">|</div>
+                                        <div class="matrix-element">13</div>
+                                    </div>
+                                    <div class="matrix-row">
+                                        <div class="matrix-element">0</div>
+                                        <div class="matrix-element">0</div>
+                                        <div class="matrix-element">1</div>
+                                        <div class="matrix-element">|</div>
+                                        <div class="matrix-element">2</div>
+                                    </div>
+                                </div>
+                                
+                                <p><strong>Шаг 4:</strong> Обратный ход — находим решение:</p>
+                                <p>z = 2</p>
+                                <p>y = 13 - 2*2 = 9</p>
+                                <p>x = 11/3 - (1/3)*9 + (2/3)*2 = 2</p>
+                                
+                                <p><strong>Ответ:</strong> x = 2, y = 9, z = 2</p>
+                            </div>
+                        `
+                    },
+                    {
+                        type: "fill-blank",
+                        question: "Решите систему методом Гаусса:",
+                        code: `x + 2y = 5<br>3x - y = 4`,
+                        blanks: [
+                            { answer: "2", placeholder: "x" },
+                            { answer: "1.5", placeholder: "y" }
+                        ]
+                    }
+                ]
+            },
+            {
+                title: "Модуль 3: Матричный метод и метод Крамера",
+                content: [
+                    {
+                        type: "theory",
+                        content: `
+                            <h2>Матричный метод решения СЛАУ</h2>
+                            <p>Если матрица A системы невырождена (её определитель det A ≠ 0), то система имеет единственное решение, которое можно найти по формуле:</p>
+                            
+                            <div class="matrix">
+                                <div class="matrix-row">
+                                    <div class="matrix-element">X = A<sup>-1</sup>B</div>
+                                </div>
+                            </div>
+                            
+                            <p>где A<sup>-1</sup> — обратная матрица к матрице A.</p>
+                            
+                            <div class="math-example">
+                                <h3>Пример</h3>
+                                <p>Решим систему матричным методом:</p>
+                                <p>2x + y = 5</p>
+                                <p>x - y = 1</p>
+                                
+                                <p>1. Матрица системы: A = <div class="matrix" style="display: inline-block;">
+                                    <div class="matrix-row">
+                                        <div class="matrix-element">2</div>
+                                        <div class="matrix-element">1</div>
+                                    </div>
+                                    <div class="matrix-row">
+                                        <div class="matrix-element">1</div>
+                                        <div class="matrix-element">-1</div>
+                                    </div>
+                                </div></p>
+                                
+                                <p>2. Найдем обратную матрицу A<sup>-1</sup> = <div class="matrix" style="display: inline-block;">
+                                    <div class="matrix-row">
+                                        <div class="matrix-element">1/3</div>
+                                        <div class="matrix-element">1/3</div>
+                                    </div>
+                                    <div class="matrix-row">
+                                        <div class="matrix-element">1/3</div>
+                                        <div class="matrix-element">-2/3</div>
+                                    </div>
+                                </div></p>
+                                
+                                <p>3. Столбец свободных членов: B = <div class="matrix" style="display: inline-block;">
+                                    <div class="matrix-row">
+                                        <div class="matrix-element">5</div>
+                                    </div>
+                                    <div class="matrix-row">
+                                        <div class="matrix-element">1</div>
+                                    </div>
+                                </div></p>
+                                
+                                <p>4. Решение: X = A<sup>-1</sup>B = <div class="matrix" style="display: inline-block;">
+                                    <div class="matrix-row">
+                                        <div class="matrix-element">2</div>
+                                    </div>
+                                    <div class="matrix-row">
+                                        <div class="matrix-element">1</div>
+                                    </div>
+                                </div></p>
+                                
+                                <p><strong>Ответ:</strong> x = 2, y = 1</p>
+                            </div>
+                        `
+                    },
+                    {
+                        type: "question",
+                        question: "Когда применим матричный метод решения СЛАУ?",
+                        options: [
+                            "Когда система имеет бесконечно много решений",
+                            "Когда определитель матрицы системы равен нулю",
+                            "Когда матрица системы вырождена",
+                            "Когда определитель матрицы системы не равен нулю"
+                        ],
+                        correctAnswer: 3
+                    },
+                    {
+                        type: "theory",
+                        content: `
+                            <h2>Метод Крамера</h2>
+                            <p>Метод Крамера применяется для решения систем линейных уравнений с невырожденной квадратной матрицей (количество уравнений равно количеству неизвестных и det A ≠ 0).</p>
+                            
+                            <p>Решение находится по формулам:</p>
+                            <p>x<sub>i</sub> = Δ<sub>i</sub> / Δ, где i = 1, 2, ..., n</p>
+                            
+                            <p>где:</p>
+                            <ul>
+                                <li>Δ — определитель матрицы системы</li>
+                                <li>Δ<sub>i</sub> — определитель матрицы, полученной из матрицы системы заменой i-го столбца на столбец свободных членов</li>
+                            </ul>
+                            
+                            <div class="math-example">
+                                <h3>Пример</h3>
+                                <p>Решим систему методом Крамера:</p>
+                                <p>3x + 2y = 7</p>
+                                <p>x - y = -1</p>
+                                
+                                <p>1. Δ = <div class="matrix" style="display: inline-block;">
+                                    <div class="matrix-row">
+                                        <div class="matrix-element">3</div>
+                                        <div class="matrix-element">2</div>
+                                    </div>
+                                    <div class="matrix-row">
+                                        <div class="matrix-element">1</div>
+                                        <div class="matrix-element">-1</div>
+                                    </div>
+                                </div> = 3*(-1) - 2*1 = -5</p>
+                                
+                                <p>2. Δ<sub>x</sub> = <div class="matrix" style="display: inline-block;">
+                                    <div class="matrix-row">
+                                        <div class="matrix-element">7</div>
+                                        <div class="matrix-element">2</div>
+                                    </div>
+                                    <div class="matrix-row">
+                                        <div class="matrix-element">-1</div>
+                                        <div class="matrix-element">-1</div>
+                                    </div>
+                                </div> = 7*(-1) - 2*(-1) = -5</p>
+                                
+                                <p>3. Δ<sub>y</sub> = <div class="matrix" style="display: inline-block;">
+                                    <div class="matrix-row">
+                                        <div class="matrix-element">3</div>
+                                        <div class="matrix-element">7</div>
+                                    </div>
+                                    <div class="matrix-row">
+                                        <div class="matrix-element">1</div>
+                                        <div class="matrix-element">-1</div>
+                                    </div>
+                                </div> = 3*(-1) - 7*1 = -10</p>
+                                
+                                <p>4. x = Δ<sub>x</sub>/Δ = (-5)/(-5) = 1</p>
+                                <p>5. y = Δ<sub>y</sub>/Δ = (-10)/(-5) = 2</p>
+                                
+                                <p><strong>Ответ:</strong> x = 1, y = 2</p>
+                            </div>
+                        `
+                    },
+                    {
+                        type: "fill-blank",
+                        question: "Решите систему методом Крамера:",
+                        code: `2x + y = 5<br>x - y = 1`,
+                        blanks: [
+                            { answer: "2", placeholder: "x" },
+                            { answer: "1", placeholder: "y" }
+                        ]
+                    }
+                ]
+            },
+            {
+                title: "Модуль 4: Итерационные методы",
+                content: [
+                    {
+                        type: "theory",
+                        content: `
+                            <h2>Итерационные методы решения СЛАУ</h2>
+                            <p>Итерационные методы применяются для решения больших систем уравнений, когда точные методы становятся неэффективными. Основная идея — построение последовательности приближений, сходящейся к точному решению.</p>
+                            
+                            <h3>Метод Якоби</h3>
+                            <p>Пусть дана система уравнений:</p>
+                            <p>a<sub>11</sub>x<sub>1</sub> + a<sub>12</sub>x<sub>2</sub> + ... + a<sub>1n</sub>x<sub>n</sub> = b<sub>1</sub></p>
+                            <p>a<sub>21</sub>x<sub>1</sub> + a<sub>22</sub>x<sub>2</sub> + ... + a<sub>2n</sub>x<sub>n</sub> = b<sub>2</sub></p>
+                            <p>...</p>
+                            <p>a<sub>n1</sub>x<sub>1</sub> + a<sub>n2</sub>x<sub>2</sub> + ... + a<sub>nn</sub>x<sub>n</sub> = b<sub>n</sub></p>
+                            
+                            <p>Выразим из каждого уравнения соответствующую переменную:</p>
+                            <p>x<sub>1</sub> = (b<sub>1</sub> - a<sub>12</sub>x<sub>2</sub> - ... - a<sub>1n</sub>x<sub>n</sub>) / a<sub>11</sub></p>
+                            <p>x<sub>2</sub> = (b<sub>2</sub> - a<sub>21</sub>x<sub>1</sub> - ... - a<sub>2n</sub>x<sub>n</sub>) / a<sub>22</sub></p>
+                            <p>...</p>
+                            <p>x<sub>n</sub> = (b<sub>n</sub> - a<sub>n1</sub>x<sub>1</sub> - ... - a<sub>n,n-1</sub>x<sub>n-1</sub>) / a<sub>nn</sub></p>
+                            
+                            <p>Задаем начальное приближение X<sup>(0)</sup> = (x<sub>1</sub><sup>(0)</sup>, x<sub>2</sub><sup>(0)</sup>, ..., x<sub>n</sub><sup>(0)</sup>) и iteratively уточняем решение.</p>
+                        `
+                    },
+                    {
+                        type: "question",
+                        question: "Для решения каких систем наиболее эффективны итерационные методы?",
+                        options: [
+                            "Систем 2×2",
+                            "Систем с вырожденной матрицей",
+                            "Больших систем со специальной структурой",
+                            "Систем с нулевым определителем"
+                        ],
+                        correctAnswer: 2
+                    },
+                    {
+                        type: "theory",
+                        content: `
+                            <h2>Метод Гаусса-Зейделя</h2>
+                            <p>Метод Гаусса-Зейделя является модификацией метода Якоби. Основное отличие — использование уже вычисленных значений переменных на текущей итерации.</p>
+                            
+                            <p>Формулы для метода Гаусса-Зейделя:</p>
+                            <p>x<sub>1</sub><sup>(k+1)</sup> = (b<sub>1</sub> - a<sub>12</sub>x<sub>2</sub><sup>(k)</sup> - ... - a<sub>1n</sub>x<sub>n</sub><sup>(k)</sup>) / a<sub>11</sub></p>
+                            <p>x<sub>2</sub><sup>(k+1)</sup> = (b<sub>2</sub> - a<sub>21</sub>x<sub>1</sub><sup>(k+1)</sup> - ... - a<sub>2n</sub>x<sub>n</sub><sup>(k)</sup>) / a<sub>22</sub></p>
+                            <p>...</p>
+                            <p>x<sub>n</sub><sup>(k+1)</sup> = (b<sub>n</sub> - a<sub>n1</sub>x<sub>1</sub><sup>(k+1)</sup> - ... - a<sub>n,n-1</sub>x<sub>n-1</sub><sup>(k+1)</sup>) / a<sub>nn</sub></p>
+                            
+                            <div class="important">
+                                <h3>Условия сходимости</h3>
+                                <p>Достаточные условия сходимости методов Якоби и Гаусса-Зейделя:</p>
+                                <ol>
+                                    <li>Диагональное преобладание: |a<sub>ii</sub>| > Σ<sub>j≠i</sub>|a<sub>ij</sub>| для всех i</li>
+                                    <li>Симметричность и положительная определенность матрицы</li>
+                                </ol>
+                            </div>
+                            
+                            <div class="math-example">
+                                <h3>Пример применения метода Гаусса-Зейделя</h3>
+                                <p>Рассмотрим систему:</p>
+                                <p>4x + y = 7</p>
+                                <p>x + 3y = 5</p>
+                                
+                                <p>Приведем к виду:</p>
+                                <p>x = (7 - y) / 4</p>
+                                <p>y = (5 - x) / 3</p>
+                                
+                                <p>Возьмем начальное приближение: x<sup>(0)</sup> = 0, y<sup>(0)</sup> = 0</p>
+                                
+                                <p>Первая итерация:</p>
+                                <p>x<sup>(1)</sup> = (7 - 0) / 4 = 1.75</p>
+                                <p>y<sup>(1)</sup> = (5 - 1.75) / 3 = 1.0833</p>
+                                
+                                <p>Вторая итерация:</p>
+                                <p>x<sup>(2)</sup> = (7 - 1.0833) / 4 = 1.4792</p>
+                                <p>y<sup>(2)</sup> = (5 - 1.4792) / 3 = 1.1736</p>
+                                
+                                <p>Третья итерация:</p>
+                                <p>x<sup>(3)</sup> = (7 - 1.1736) / 4 = 1.4566</p>
+                                <p>y<sup>(3)</sup> = (5 - 1.4566) / 3 = 1.1811</p>
+                                
+                                <p>Уже после трех итераций мы приблизились к точному решению: x = 1.4545, y = 1.1818</p>
+                            </div>
+                        `
+                    },
+                    {
+                        type: "fill-blank",
+                        question: "Какое условие сходимости итерационных методов требует, чтобы для каждого уравнения модуль диагонального элемента был больше суммы модулей остальных элементов?",
+                        blanks: [
+                            { answer: "диагональное преобладание", placeholder: "название условия" }
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        // Мемы для правильных и неправильных ответов
+        const memes = {
+            correct: [
+                "1.png",
+                "2.png",
+                "3.png",
+                "4.png"
+            ],
+            incorrect: [
+                "5.png",
+                "6.png",
+                "7.png",
+                "8.png"
+            ]
+        };
+
+        let currentModule = 0;
+        let currentContent = 0;
+        let userAnswers = [];
+        const contentContainer = document.getElementById('content-container');
+        const modal = document.getElementById('modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalText = document.getElementById('modal-text');
+        const modalImage = document.getElementById('modal-image');
+        const progress = document.getElementById('progress');
+        const moduleProgress = document.getElementById('module-progress');
+        const results = document.getElementById('results');
+        const correctAnswersEl = document.getElementById('correct-answers');
+        const totalQuestionsEl = document.getElementById('total-questions');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+
+        // Инициализация курса
+        function initCourse() {
+            userAnswers = [];
+            currentModule = 0;
+            currentContent = 0;
+            results.style.display = 'none';
+            prevBtn.style.display = 'block';
+            nextBtn.style.display = 'block';
+            moduleProgress.style.display = 'block';
+            loadContent();
+            updateProgress();
+            updateNavigation();
+        }
+
+        // Загрузка текущего контента
+        function loadContent() {
+            if (currentModule >= courseModules.length) {
+                showResults();
+                return;
+            }
+
+            const module = courseModules[currentModule];
+            const content = module.content[currentContent];
+            
+            moduleProgress.textContent = `Модуль ${currentModule + 1} из ${courseModules.length}`;
+            
+            contentContainer.innerHTML = `
+                <h2 class="module-title">${module.title}</h2>
+            `;
+            
+            if (content.type === "theory") {
+                contentContainer.innerHTML += `
+                    <div class="theory-block">
+                        <div class="theory-content">${content.content}</div>
+                        <button class="next-module-btn" onclick="nextContent()">Продолжить</button>
+                    </div>
+                `;
+            } else if (content.type === "question") {
+                contentContainer.innerHTML += `
+                    <div class="question-card">
+                        <div class="question-title">${content.question}</div>
+                        <div class="options">
+                            ${content.options.map((option, index) => `
+                                <div class="option">
+                                    <input type="radio" name="answer" id="option-${index}" value="${index}">
+                                    <label for="option-${index}">${option}</label>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <button class="submit-btn" onclick="checkAnswer()">Ответить</button>
+                    </div>
+                `;
+            } else if (content.type === "fill-blank") {
+                const blankInputs = content.blanks.map((blank, index) => 
+                    `<input type="text" class="fill-input" id="blank-${index}" placeholder="${blank.placeholder}">`
+                ).join(' ');
+                
+                contentContainer.innerHTML += `
+                    <div class="question-card">
+                        <div class="question-title">${content.question}</div>
+                        <div class="fill-blank">
+                            <div class="code-block">${content.code}</div>
+                            <div style="margin-top: 15px;">${blankInputs}</div>
+                        </div>
+                        <button class="submit-btn" onclick="checkFillBlank()">Ответить</button>
+                    </div>
+                `;
+            }
+            
+            updateNavigation();
+        }
+
+        // Проверка ответа на вопрос с вариантами
+        function checkAnswer() {
+            const selectedOption = document.querySelector('input[name="answer"]:checked');
+            
+            if (!selectedOption) {
+                alert('Пожалуйста, выберите ответ');
+                return;
+            }
+            
+            const answer = parseInt(selectedOption.value);
+            const module = courseModules[currentModule];
+            const content = module.content[currentContent];
+            const isCorrect = answer === content.correctAnswer;
+            
+            userAnswers.push({
+                module: currentModule,
+                content: currentContent,
+                answer: answer,
+                isCorrect: isCorrect
+            });
+            
+            // Показ модального окна с результатом и мемом
+            showResultModal(isCorrect, isCorrect ? 
+                "Правильно! Отличная работа!" : 
+                `Неверно. Правильный ответ: ${content.options[content.correctAnswer]}`);
+        }
+
+        // Проверка заполнения пропусков
+        function checkFillBlank() {
+            const module = courseModules[currentModule];
+            const content = module.content[currentContent];
+            let allCorrect = true;
+            const answers = [];
+            
+            for (let i = 0; i < content.blanks.length; i++) {
+                const input = document.getElementById(`blank-${i}`);
+                const userAnswer = input.value.trim().toLowerCase();
+                const correctAnswer = content.blanks[i].answer.toLowerCase();
+                
+                if (userAnswer !== correctAnswer) {
+                    allCorrect = false;
+                }
+                
+                answers.push({
+                    userAnswer: userAnswer,
+                    correctAnswer: correctAnswer,
+                    isCorrect: userAnswer === correctAnswer
+                });
+            }
+            
+            userAnswers.push({
+                module: currentModule,
+                content: currentContent,
+                answers: answers,
+                isCorrect: allCorrect
+            });
+            
+            showResultModal(allCorrect, allCorrect ? 
+                "Правильно! Все пропуски заполнены верно!" : 
+                "Не все пропуски заполнены правильно. Попробуйте еще раз.");
+        }
+
+        // Показать модальное окно с результатом
+        function showResultModal(isCorrect, message) {
+            if (isCorrect) {
+                modalTitle.textContent = 'Правильно!';
+                modalTitle.className = 'modal-title correct';
+                modalText.innerHTML = `<span class="correct">${message}</span>`;
+                // Случайный мем для правильного ответа
+                const randomMemes = memes.correct;
+                modalImage.src = randomMemes[Math.floor(Math.random() * randomMemes.length)];
+            } else {
+                modalTitle.textContent = 'Неправильно';
+                modalTitle.className = 'modal-title incorrect';
+                modalText.innerHTML = `<span class="incorrect">${message}</span>`;
+                // Случайный мем для неправильного ответа
+                const randomMemes = memes.incorrect;
+                modalImage.src = randomMemes[Math.floor(Math.random() * randomMemes.length)];
+            }
+            
+            modal.style.display = 'flex';
+        }
+
+        // Закрытие модального окна и переход к следующему контенту
+        function closeModal() {
+            modal.style.display = 'none';
+            nextContent();
+        }
+
+        // Переход к следующему контенту
+        function nextContent() {
+            currentContent++;
+            const module = courseModules[currentModule];
+            
+            if (currentContent >= module.content.length) {
+                currentContent = 0;
+                currentModule++;
+            }
+            
+            updateProgress();
+            
+            if (currentModule < courseModules.length) {
+                loadContent();
+            } else {
+                showResults();
+            }
+        }
+
+        // Переход к предыдущему контенту
+        function prevContent() {
+            currentContent--;
+            
+            if (currentContent < 0) {
+                currentModule--;
+                
+                if (currentModule < 0) {
+                    currentModule = 0;
+                    currentContent = 0;
+                } else {
+                    const module = courseModules[currentModule];
+                    currentContent = module.content.length - 1;
+                }
+            }
+            
+            updateProgress();
+            loadContent();
+        }
+
+        // Обновление прогресс-бара
+        function updateProgress() {
+            const totalContents = courseModules.reduce((acc, module) => acc + module.content.length, 0);
+            const completedContents = userAnswers.length;
+            const progressPercent = (completedContents / totalContents) * 100;
+            progress.style.width = `${progressPercent}%`;
+        }
+
+        // Обновление навигации
+        function updateNavigation() {
+            prevBtn.disabled = currentModule === 0 && currentContent === 0;
+            
+            const module = courseModules[currentModule];
+            const isLastContent = currentContent === module.content.length - 1;
+            const isLastModule = currentModule === courseModules.length - 1;
+            
+            nextBtn.textContent = isLastContent && isLastModule ? 'Завершить' : 
+                                isLastContent ? 'Следующий модуль' : 'Далее';
+        }
+
+        // Показ результатов
+        function showResults() {
+            const correctAnswers = userAnswers.reduce((acc, answer) => {
+                return acc + (answer.isCorrect ? 1 : 0);
+            }, 0);
+            
+            const totalQuestions = userAnswers.length;
+            
+            correctAnswersEl.textContent = correctAnswers;
+            totalQuestionsEl.textContent = totalQuestions;
+            
+            contentContainer.innerHTML = '';
+            results.style.display = 'block';
+            prevBtn.style.display = 'none';
+            nextBtn.style.display = 'none';
+            moduleProgress.style.display = 'none';
+        }
+
+        // Перезапуск курса
+        function restartCourse() {
+            initCourse();
+        }
+
+        // Инициализация при загрузке страницы
+        window.onload = initCourse;
+    </script>
+</body>
+</html>
